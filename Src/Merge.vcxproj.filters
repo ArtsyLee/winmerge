@@ -607,6 +607,9 @@
     <ClCompile Include="SubstitutionFiltersList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Common\IniOptionsMgr.cpp">
+      <Filter>Common\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="PropEditorSyntax.cpp">
       <Filter>MFCGui\PropertyPages\Source Files</Filter>
     </ClCompile>
@@ -1202,6 +1205,9 @@
     </ClInclude>
     <ClInclude Include="SubstitutionFiltersList.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\IniOptionsMgr.h">
+      <Filter>Common\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropEditorSyntax.h">
       <Filter>MFCGui\PropertyPages\Header Files</Filter>
