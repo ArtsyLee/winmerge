@@ -115,7 +115,10 @@ const TCHAR *MergeCmdLineInfo::SetConfig(const TCHAR *q)
  */
 MergeCmdLineInfo::MergeCmdLineInfo(const TCHAR *q):
 	m_nCmdShow(SHOWNORMAL),
-	m_bEscShutdown(false),
+	//++[artsylee]
+	//m_bEscShutdown(false),
+	m_bEscShutdown(true),
+	//--[artsylee]
 	m_bExitIfNoDiff(Disabled),
 	m_bRecurse(false),
 	m_bNonInteractive(false),
@@ -219,7 +222,10 @@ void MergeCmdLineInfo::ParseWinMergeCmdLine(const TCHAR *q)
 		else if (param == _T("e"))
 		{
 			// -e to allow closing with single esc press
-			m_bEscShutdown = true;
+			//++[artsylee]
+			//m_bEscShutdown = true;
+			m_bEscShutdown = false;
+			//--[artsylee]
 		}
 		else if (param == _T("f"))
 		{
