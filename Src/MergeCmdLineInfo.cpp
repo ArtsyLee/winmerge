@@ -147,7 +147,10 @@ MergeCmdLineInfo::MergeCmdLineInfo(const tchar_t* q)
 	, m_nWindowType(AUTOMATIC)
 	, m_nDialogType(NO_DIALOG)
 	, m_bShowCompareAsMenu(false)
-	, m_bEscShutdown(false)
+	//++[artsylee]
+	//, m_bEscShutdown(false)
+	, m_bEscShutdown(true)
+	//--[artsylee]
 	, m_bExitIfNoDiff(Disabled)
 	, m_bNonInteractive(false)
 	, m_nSingleInstance()
@@ -255,7 +258,10 @@ void MergeCmdLineInfo::ParseWinMergeCmdLine(const tchar_t *q)
 		else if (param == _T("e"))
 		{
 			// -e to allow closing with single esc press
-			m_bEscShutdown = true;
+			//++[artsylee]
+			//m_bEscShutdown = true;
+			m_bEscShutdown = false;
+			//--[artsylee]
 		}
 		else if (param == _T("f"))
 		{
