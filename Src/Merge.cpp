@@ -19,7 +19,10 @@
 #include "Environment.h"
 #include "OptionsMgr.h"
 #include "OptionsInit.h"
-#include "RegOptionsMgr.h"
+//++[artsylee]
+//#include "RegOptionsMgr.h"
+#include "IniOptionsMgr.h"
+//--[artsylee]
 #include "OpenDoc.h"
 #include "OpenFrm.h"
 #include "OpenView.h"
@@ -99,7 +102,10 @@ CMergeApp::CMergeApp() :
 , m_mainThreadScripts(nullptr)
 , m_nLastCompareResult(0)
 , m_bNonInteractive(false)
-, m_pOptions(new CRegOptionsMgr())
+//++[artsylee]
+//, m_pOptions(new CRegOptionsMgr())
+, m_pOptions(new CIniOptionsMgr())
+//--[artsylee]
 , m_pGlobalFileFilter(new FileFilterHelper())
 , m_nActiveOperations(0)
 , m_pLangDlg(new CLanguageSelect())
@@ -194,7 +200,9 @@ BOOL CMergeApp::InitInstance()
 	if (cmdInfo.m_bNoPrefs)
 		m_pOptions->SetSerializing(false); // Turn off serializing to registry.
 
-	Options::CopyHKLMValues();
+	//++[artsylee]
+	//Options::CopyHKLMValues();
+	//--[artsylee]
 	Options::Init(m_pOptions.get()); // Implementation in OptionsInit.cpp
 	ApplyCommandLineConfigOptions(cmdInfo);
 	if (cmdInfo.m_sErrorMessages.size() > 0)
@@ -220,7 +228,9 @@ BOOL CMergeApp::InitInstance()
 
 	// WinMerge registry settings are stored under HKEY_CURRENT_USER/Software/Thingamahoochie
 	// This is the name of the company of the original author (Dean Grimm)
+	//++[artsylee]
 	SetRegistryKey(_T("Thingamahoochie"));
+	//--[artsylee]
 
 	int nSingleInstance = cmdInfo.m_nSingleInstance.has_value() ?
 		*cmdInfo.m_nSingleInstance : GetOptionsMgr()->GetInt(OPT_SINGLE_INSTANCE);
@@ -560,7 +570,9 @@ BOOL CMergeApp::OnIdle(LONG lCount)
 	if (m_bNonInteractive && IsReallyIdle())
 		m_pMainWnd->PostMessage(WM_CLOSE, 0, 0);
 
-	static_cast<CRegOptionsMgr *>(GetOptionsMgr())->CloseKeys();
+	//++[artsylee]
+	//static_cast<CRegOptionsMgr *>(GetOptionsMgr())->CloseKeys();
+	//--[artsylee]
 
 	return FALSE;
 }

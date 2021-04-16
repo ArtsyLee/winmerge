@@ -8,7 +8,10 @@
 #include <vector>
 #include "OptionsDef.h"
 #include "OptionsMgr.h"
-#include "RegOptionsMgr.h"
+ //++[artsylee]
+ //#include "RegOptionsMgr.h"
+#include "IniOptionsMgr.h"
+//--[artsylee]
 #include "OptionsCustomColors.h"
 #include "OptionsDiffOptions.h"
 #include "OptionsDiffColors.h"
@@ -28,6 +31,22 @@ static void CopyFromLMtoCU(HKEY lmKey, HKEY cuKey, LPCTSTR valname);
 
 namespace Options
 {
+	//++[artsylee]
+	static void GetFileDir(TCHAR* szOutput, const TCHAR* pszFileName)
+	{
+		const TCHAR* p = _tcsrchr(pszFileName, '\\');
+		if (!p)
+		{
+			szOutput[0] = 0;
+		}
+		else
+		{
+			int len = (int)(p - pszFileName);
+			memcpy(szOutput, pszFileName, len * sizeof(TCHAR));
+			szOutput[len] = 0;
+		}
+	}
+	//--[artsylee]
 
 /**
  * @brief Initialise options and set default values.
@@ -38,7 +57,15 @@ namespace Options
  */
 void Init(COptionsMgr *pOptions)
 {
-	static_cast<CRegOptionsMgr *>(pOptions)->SetRegRootKey(_T("Thingamahoochie\\WinMerge\\"));
+	//++[artsylee]
+	//static_cast<CRegOptionsMgr *>(pOptions)->SetRegRootKey(_T("Thingamahoochie\\WinMerge\\"));
+	TCHAR szAppDir[MAX_PATH];
+	TCHAR szAppPath[MAX_PATH];
+	GetModuleFileName(NULL, szAppPath, MAX_PATH);
+	GetFileDir(szAppDir, szAppPath);
+	_tcscat_s(szAppDir, _T("\\WinMerge.ini"));
+	static_cast<CIniOptionsMgr*>(pOptions)->SetIniFileName(szAppDir);
+	//--[artsylee]
 
 	LANGID LangId = GetUserDefaultLangID();
 	pOptions->InitOption(OPT_SELECTED_LANGUAGE, static_cast<int>(LangId));
